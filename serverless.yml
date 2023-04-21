@@ -1,0 +1,40 @@
+service: xx-notifier
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  region: eu-west-1
+  environment:
+    ACCOUNT_ID: "xxx-103871630"
+    BUCKET: "xx-notifier-data-prod"
+    REGION: ${self:provider.region}
+    QUEUE_NAME: "coreapp-prod.fifo"
+    FROM_EMAIL: "nuwan.prime@gmail.com"
+  
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action: 
+        - "s3:PutObject"
+        - "s3:PutObjectAcl"
+        - "s3:GetObject"
+        - "s3:GetObjectVersion"
+        - "s3:GetObjectAcl"
+        - "s3:DeleteObject"
+      Resource: "arn:aws:s3:::xx-notifier-data-prod/*"
+    - Effect: "Allow"
+      Action:
+        - "sqs:ReceiveMessage"
+      Resource: "arn:aws:sqs:${self:provider.region}:*:coreapp-prod.fifo"
+    - Effect: "Allow"
+      Action:
+        - "ses:SendEmail"
+      Resource: [
+        "arn:aws:ses:*:139103871630:configuration-set/*",
+        "arn:aws:ses:*:139103871630:identity/*",
+      ]
+
+functions:
+  receiver:
+    handler: handler.handleMessage
+    events:
+      - sqs: arn:aws:sqs:eu-west-1:139103871630:coreapp-prod.fifo

@@ -1,0 +1,23 @@
+{
+  "name": "eventsx-notifier",
+  "version": "1.0.0",
+  "description": "AWS serverless lambda to handle EventX project notifications(Ex - Email, Push Notification[*In future release], SMS[*In future release])",
+  "main": "handler.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eventsx-git/EventsX-Notifier.git"
+  },
+  "author": "Cirrent Cloud Team",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/eventsx-git/EventsX-Notifier/issues"
+  },
+  "homepage": "https://github.com/eventsx-git/EventsX-Notifier#readme",
+  "dependencies": {
+    "aws-sdk": "^2.1096.0",
+    "handlebars": "^4.7.7"
+  }
+}
